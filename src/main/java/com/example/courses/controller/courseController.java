@@ -3,9 +3,11 @@ package com.example.courses.controller;
 import com.example.courses.modal.Course;
 import com.example.courses.repository.courseRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -13,17 +15,33 @@ public class courseController {
     @Autowired
     private final courseRepo repository;
 
+
     public courseController (courseRepo repository){
         this.repository=repository;
     }
+//    Update the courses
     @PostMapping("/api/courses")
     public Course addCourse(@RequestBody Course course){
         return repository.save(course);
     }
-    @GetMapping("/api")
+//    Show all the courses
+    @GetMapping("/api/courses")
     public List<Course> getAll(){
         return repository.findAll();
     }
+
+    @GetMapping("/api/courses/{id}")
+    public ResponseEntity<Course> getCourseById(@PathVariable Long id) {
+        Optional<Course> optionalCourse = repository.findById(id);
+        if (optionalCourse.isPresent()) {
+            Course course = optionalCourse.get();
+            return ResponseEntity.ok(course); // Return course with OK status code
+        } else {
+            return ResponseEntity.notFound().build(); // Return Not Found status code
+        }
+    }
+
+// update the body of the given id
     @PutMapping("/{id}")
     public Course updateCourse(@PathVariable Long id,@RequestBody Course course){
         Course existC= repository.findById(id).get();
@@ -43,39 +61,3 @@ public class courseController {
     }
 
 }
-//
-//
-//
-//@GetMapping("/api/courses")
-//public ResponseEntity<List<Course>> allCourse(){
-//try{
-//    List<Course> courList= new ArrayList<>();
-//    repository.findAll().forEach(courList::add);
-//    if (courList.isEmpty()){
-//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//    }
-//    return new ResponseEntity<>( HttpStatus.OK);
-//}catch(Exception ex){
-//    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
-//}
-//
-//
-//@GetMapping("/api/courses/{id}")
-//public ResponseEntity<Course> getCoursebyID(@PathVariable Long id){
-//   Optional<Course> courseData=repository.findById(id);
-//
-//   if(courseData.isPresent())
-//   {    return new ResponseEntity<>(courseData.get(), HttpStatus.OK);
-//    }
-//    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//}
-//
-//
-//@DeleteMapping("/api/courses/{id}")
-//public ResponseEntity<HttpStatus> delCourse(@PathVariable Long id){
-//    repository.deleteById(id);
-//    return new ResponseEntity<>(HttpStatus.OK);
-//
-//}
-

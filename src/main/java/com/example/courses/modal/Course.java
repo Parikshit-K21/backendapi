@@ -4,6 +4,7 @@ package com.example.courses.modal;
 import jakarta.persistence.*;
 
 @Entity
+
 public class Course {
 
     @Id
