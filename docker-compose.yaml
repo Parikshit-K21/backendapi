@@ -1,0 +1,22 @@
+services:
+  sup:
+    image: postgres:latest
+    container_name: "sup"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+  springdkcomp:
+      image: postsup
+      container_name: "springdkcomp"
+      build: .
+      environment:
+        - DATABASE_URL=jdbc:postgresql://java_db:5432/postgres
+        - DATABASE_USERNAME=postgres
+        - DATABASE_PASSWORD=root
+      ports:
+        - 8080:8081
+      links:
+        - sup
