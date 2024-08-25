@@ -11,6 +11,7 @@ import java.util.Optional;
 
 
 @RestController
+@CrossOrigin("http://localhost:3000/")
 public class courseController {
     @Autowired
     private final courseRepo repository;

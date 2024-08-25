@@ -26,6 +26,6 @@ public class CourseDeliveryService {
     }
 
     public void deleteCourseDelivery(int year, int semester, Long id) {
-        courseDeliveryRepository.deleteByYearAndSemesterAndId(year, semester, id);
+        courseDeliveryRepository.deleteById(Math.toIntExact(id));
     }
 }

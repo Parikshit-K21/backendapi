@@ -15,5 +15,5 @@ public interface instRepo extends JpaRepository<CourseDelivery,Integer> {
 
     Optional<CourseDelivery> findByYearAndSemesterAndId(int year, int semester, Long id);
 
-    void deleteByYearAndSemesterAndId(int year, int semester, Long id);
+
 }

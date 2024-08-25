@@ -2,6 +2,7 @@ package com.example.courses.modal;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 
 
 @Entity
@@ -9,13 +10,7 @@ import jakarta.persistence.*;
 public class CourseDelivery {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "course_id")
-    private Course course;
-
     private int year;
     private int semester;
 
@@ -27,14 +22,6 @@ public class CourseDelivery {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
     }
 
     public int getYear() {
@@ -57,7 +44,7 @@ public class CourseDelivery {
     public String toString() {
         return "CourseDelivery{" +
                 "id=" + id +
-                ", course=" + course +
+
                 ", year=" + year +
                 ", semester=" + semester +
                 '}';
